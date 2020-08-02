@@ -19,13 +19,6 @@ import GradientButton from '../../components/GradientButton';
 import CMH from '../../assets/svg/CMH_LOGO';
 
 export default class Initial extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: '',
-    };
-  }
 
   onPressRegister = () => {
     this.props.navigation.navigate('Register');
