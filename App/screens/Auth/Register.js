@@ -40,13 +40,6 @@ class Register extends Component {
   });
 
   onPressRegister = () => {
-    // // this.props.navigation.navigate('Register');
-    // alert('login');
-    // // console.log(this.state)
-    // this.props.login(this.state)
-    // console.log('new data')
-    // console.log(this.props.account)
-    // this.props.navigation.navigate('Register');
     if (!this.isPasswordMatch()){
       alert("Password Mismatch")
       return;
