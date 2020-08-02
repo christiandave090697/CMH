@@ -12,7 +12,7 @@ export default class NormalButton extends Component {
   render() {
     let {buttonColor, buttonPress, buttonText, buttonTextColor} = this.props;
     let buttonStyle = {...styles.button, ...{backgroundColor: buttonColor}};
-    let textStyle = {...styles.text, ...{color: buttonTextColor}};
+    let textStyle = {...styles.text, ...{color: buttonTextColor, fontFamily: "LATO-BOLD"}};
     return (
       <TouchableOpacity style={buttonStyle} onPress={() => buttonPress()}>
         <Text style={textStyle}>{buttonText}</Text>
