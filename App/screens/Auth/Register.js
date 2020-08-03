@@ -54,8 +54,6 @@ class Register extends Component {
         alert('Registration Failed');
         return;
       }
-      console.log('Response:');
-      console.log(response);
       alert('Successfully Registered');
     };
 

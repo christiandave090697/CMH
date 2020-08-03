@@ -9,6 +9,7 @@ import SearchActive from '../assets/svg/Search.svg';
 import SearchInactive from '../assets/svg/Search - Inactive.svg';
 import LibraryActive from '../assets/svg/Library.svg';
 import LibraryInactive from '../assets/svg/Library - Inactive.svg';
+import Settings from '../assets/svg/Settings'
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
@@ -19,6 +20,30 @@ import {
 
 
 export default class BottomTab extends Component {
+
+
+  componentDidMount() {
+    this.props.navigation.setOptions({
+      title: null,
+      headerShown: true,
+      headerStyle: {
+        backgroundColor: THEME_COLOR_1,
+        elevation: 0,
+        shadowOpacity: 0,
+      },
+      headerRight: ({navigate}) => (
+        <TouchableOpacity
+          // onPress={this.onPressSettings}
+          style={styles.settingsButton}>
+          <Settings
+            width={BOTTOM_TAB_ICON_WIDTH}
+            height={BOTTOM_TAB_ICON_HEIGHT}
+          />
+        </TouchableOpacity>
+      ),
+      headerLeft: null,
+    });
+  }
 
 
   tabIcons(isFocused, tabID) {

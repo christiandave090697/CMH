@@ -61,7 +61,7 @@ class Login extends Component {
       let authToken = response.token;
       let data = {...this.state, ...{authToken}};
       this.props.login(data);
-      alert('Successful Login');
+      this.props.navigation.navigate('Main')
     };
 
     Post(obj, result);

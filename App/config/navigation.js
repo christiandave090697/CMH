@@ -3,6 +3,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 import Register from '../screens/Auth/Register';
 import Login from '../screens/Auth/Login';
@@ -13,19 +14,38 @@ import Library from '../screens/Main/Library';
 import Search from '../screens/Main/Search';
 import Category from '../screens/Main/Category';
 
+import Featured from '../screens/HomeTabs/Featured'
+import Artists from '../screens/HomeTabs/Artists'
+import Playlist from '../screens/HomeTabs/Playlist';
+import Albums from '../screens/HomeTabs/Albums'
+
 import BottomTab from '../components/BottomTab';
+import HomeTabs from '../components/HomeTabs';
+
 
 const authStack = createStackNavigator();
 const appStack = createStackNavigator();
 const mainTabStack = createBottomTabNavigator();
+const homeTabStack = createMaterialTopTabNavigator();
+
+
 
 const MainTabStackScreen = () => (
   <mainTabStack.Navigator tabBar={(props) => <BottomTab {...props} />}>
-    <mainTabStack.Screen name="Home" component={Home} />
+    <mainTabStack.Screen name="Home" component={HomeTabStack} />
     <mainTabStack.Screen name="Search" component={Search} />
     <mainTabStack.Screen name="Category" component={Category} />
     <mainTabStack.Screen name="Library" component={Library} />
   </mainTabStack.Navigator>
+);
+
+const HomeTabStack = () => (
+  <homeTabStack.Navigator tabBar={(props) => <HomeTabs {...props} />}>
+    <homeTabStack.Screen name="Featured" component={Featured} />
+    <homeTabStack.Screen name="Artists" component={Artists} />
+    <homeTabStack.Screen name="Albums" component={Albums} />
+    <homeTabStack.Screen name="Playlist" component={Playlist} />
+  </homeTabStack.Navigator>
 );
 
 const AuthStackScreen = () => (
