@@ -12,8 +12,8 @@ export const BUTTON_GRADIENT_COLOR_1 = ['#66D5F7', '#0EAFE1'];
 
 export const BOTTOM_TAB_ICON_HEIGHT = DEVICE_HEIGHT * 0.06;
 export const BOTTOM_TAB_ICON_WIDTH = DEVICE_WIDTH * 0.06;
-export const CHM_LOGO_WIDTH = DEVICE_WIDTH * 0.3;
-export const CHM_LOGO_HEIGHT = DEVICE_HEIGHT * 0.1;
+export const CHM_LOGO_WIDTH = DEVICE_WIDTH * 0.7
+export const CHM_LOGO_HEIGHT = DEVICE_HEIGHT * 0.4;
 
 export const GRADIENT_COLOR_SET_1 = {
   COLORS: ['#235463', '#909FA4'],

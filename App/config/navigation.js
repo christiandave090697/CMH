@@ -40,7 +40,7 @@ const MainTabStackScreen = () => (
 );
 
 const HomeTabStack = () => (
-  <homeTabStack.Navigator tabBar={(props) => <HomeTabs {...props} />}>
+  <homeTabStack.Navigator swipeEnabled={false}  tabBar={(props) => <HomeTabs {...props} />}>
     <homeTabStack.Screen name="Featured" component={Featured} />
     <homeTabStack.Screen name="Artists" component={Artists} />
     <homeTabStack.Screen name="Albums" component={Albums} />

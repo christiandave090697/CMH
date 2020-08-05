@@ -37,7 +37,6 @@ export default class HomeTabs extends Component {
               : route.name;
 
           const isFocused = state.index === index;
-          console.log(route.name);
           const onPress = () => {
             const event = navigation.emit({
               type: 'tabPress',

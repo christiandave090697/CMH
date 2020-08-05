@@ -87,11 +87,10 @@ class Login extends Component {
     return (
       <View style={styles.mainContainer}>
         <ImageBackground source={LOGIN_BG} style={styles.ImageBackground}>
-          {/* <CMH
-            // width={CHM_LOGO_WIDTH}
-            // height={CHM_LOGO_HEIGHT}
-          /> */}
-          <View style={{marginBottom: DEVICE_HEIGHT * 0.3}}></View>
+          <CMH
+            width={CHM_LOGO_WIDTH}
+            height={CHM_LOGO_HEIGHT}
+          />
           <Input
             borderColor={'#FFFFFF'}
             placeHolder={'Email address'}
