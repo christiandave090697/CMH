@@ -1,8 +1,8 @@
 import {LOGIN, REGISTER} from './types';
 
-export const login = (data) => ({
+export const login = (payload) => ({
   type: LOGIN,
-  data: data,
+  payload: payload
 });
 
 export const register = (data) => ({

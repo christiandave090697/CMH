@@ -12,7 +12,7 @@ const accountReducer = (state = initialState, action) => {
     case LOGIN:
       return {
         ...state,
-        account: action.data,
+        account: action.payload,
         isLogin: true,
       };
 

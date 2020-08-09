@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   View,
   Text,
+  Button,
   ImageBackground,
 } from 'react-native';
 import {
@@ -23,8 +24,7 @@ import {connect} from 'react-redux';
 import {login} from '../../redux/actions/account';
 
 //api
-import RegisterRequestObject from '../../api/requestsObjects/registerRequestObject';
-import {Post} from '../../api/service/service';
+import {POST} from '../../api/service/service';
 import {URL} from '../../constants/apirUrls';
 
 class Register extends Component {
@@ -34,42 +34,48 @@ class Register extends Component {
   }
 
   _getState = () => ({
-    username: 'eve.holt@reqres.in',
-    password: 'cityslicka',
-    retypePassword: 'cityslicka'
+    email: '',
+    password: '',
+    retypePassword: '',
   });
 
   onPressRegister = () => {
-    if (!this.isPasswordMatch()){
-      alert("Password Mismatch")
+    if (!this.isPasswordMatch()) {
+      alert('Password Mismatch');
       return;
     }
-  
-    var credentials = this.state;
-    const obj = new RegisterRequestObject(credentials);
-    obj.setUrl(URL.REGISTER);
 
-    const result = (response) => {
-      if (response.error) {
-        alert('Registration Failed');
-        return;
-      }
-      alert('Successfully Registered');
+    let {email, password} = this.state;
+    let data = {email, password};
+    let url = URL.REGISTER;
+
+    const receiver = (response) => {
+      console.log('Response:');
+      console.log(response);
+      // let authToken = response.access_token;
+      // let propData = {...data, authToken}
+      // this.props.login(propData);
+      // this.props.navigation.navigate('Register')
     };
 
-    Post(obj, result);
+    let payload = {
+      data,
+      url,
+      receiver,
+    };
+    POST(payload);
   };
 
   isPasswordMatch = () => {
-    let {password, retypePassword} = this.state
-    let match = password === retypePassword ? true : false
+    let {password, retypePassword} = this.state;
+    let match = password === retypePassword ? true : false;
     return match;
-  }
+  };
 
-  username = (input) => {
+  email = (input) => {
     console.log(input);
     this.setState({
-      username: input,
+      email: input,
     });
   };
 
@@ -93,14 +99,11 @@ class Register extends Component {
     return (
       <View style={styles.mainContainer}>
         <ImageBackground source={LOGIN_BG} style={styles.ImageBackground}>
-          <CMH
-            width={CHM_LOGO_WIDTH}
-            height={CHM_LOGO_HEIGHT}
-          />
+          <CMH width={CHM_LOGO_WIDTH} height={CHM_LOGO_HEIGHT} />
           <Input
             borderColor={'#FFFFFF'}
             placeHolder={'Email address'}
-            inputUpdate={this.username}
+            inputUpdate={this.email}
             marginBottom={DEVICE_HEIGHT * 0.03}
           />
           <Input
@@ -110,7 +113,7 @@ class Register extends Component {
             security={true}
             marginBottom={DEVICE_HEIGHT * 0.03}
           />
-           <Input
+          <Input
             borderColor={'#FFFFFF'}
             placeHolder={'Verify Password'}
             inputUpdate={this.retypePassword}

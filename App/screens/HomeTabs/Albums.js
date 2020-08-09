@@ -22,7 +22,6 @@ import AlbumTile from '../../components/AlbumTile';
 
 import LinearGradient from 'react-native-linear-gradient';
 
-import RecentRequestObject from '../../api/requestsObjects/recentRequestObject';
 import {Get} from '../../api/service/service';
 import {URL} from '../../constants/apirUrls';
 
