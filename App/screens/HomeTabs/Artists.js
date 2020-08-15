@@ -22,17 +22,21 @@ import AlbumTile from '../../components/AlbumTile';
 
 import LinearGradient from 'react-native-linear-gradient';
 
-import {Get} from '../../api/service/service';
+//redux
+import {connect} from 'react-redux';
+import {login} from '../../redux/actions/account';
+
+import {POST} from '../../api/service/service';
 import {URL} from '../../constants/apirUrls';
 
 import {test_artist, test_album} from '../../constants/test';
 
-export default class Artists extends Component {
+class Artists extends Component {
   constructor(props) {
     super(props);
     this.state = {
       upcoming: [],
-      like: [],
+      suggested: [],
       extraData: [],
       isLoading: false,
     };
@@ -43,61 +47,91 @@ export default class Artists extends Component {
   }
 
   initData = () => {
-    //api call
-    //const obj = new RecentRequestObject();
-    // obj.setUrl(URL.LOGIN);
-    // const result = (response) => {
-    //   console.log("-------------")
-    //   console.log(response)
-    //   console.log("-------------")
-    // };
-    // Get(obj, result);
+    let user_id = this.props.account.user_id;
+    let authToken = this.props.account.authToken;
+    let data = {user_id};
+    let url = URL.ARTISTS_ALL;
 
-    this.setState({
-      upcoming: test_artist,
-      like: test_artist,
-      isLoading: false,
-    });
+    const receiver = (response) => {
+      console.log('Response:');
+      console.log(response);
+
+      let suggested = response.data.suggested.data
+      let upcoming = response.data.upcoming.data
+      this.setState({
+        upcoming: upcoming,
+        suggested: suggested,
+        isLoading: false,
+      });
+    };
+
+    let payload = {
+      data,
+      url,
+      receiver,
+      authToken,
+    };
+    POST(payload);
   };
 
   addUpcomingData = () => {
     this.setState({isLoading: true});
-    //api call
-    //const obj = new RecentRequestObject();
-    // obj.setUrl(URL.LOGIN);
-    // const result = (response) => {
-    //   console.log("-------------")
-    //   console.log(response)
-    //   console.log("-------------")
-    let currentData = this.state.upcoming;
-    let incomingData = test_artist;
-    let mergedData = currentData.concat(incomingData);
-    this.setState({
-      upcoming: mergedData,
-      isLoading: false,
-    });
-    // };
-    // Get(obj, result);
+    let user_id = this.props.account.user_id;
+    let authToken = this.props.account.authToken;
+    let records = 5;
+    let data = {user_id, records};
+    let url = URL.ARTISTS_SPECIFIC;
+
+    const receiver = (response) => {
+      console.log('Response:');
+      console.log(response);
+
+      let currentData = this.state.upcoming;
+      let incomingData = response.data.data;
+      let mergedData = currentData.concat(incomingData);
+      this.setState({
+        upcoming: mergedData,
+        isLoading: false,
+      });
+    };
+
+    let payload = {
+      data,
+      url,
+      receiver,
+      authToken,
+    };
+    POST(payload);
   };
 
-  addLikeData = () => {
+  addSuggestedData = () => {
     this.setState({isLoading: true});
-    //api call
-    //const obj = new RecentRequestObject();
-    // obj.setUrl(URL.LOGIN);
-    // const result = (response) => {
-    //   console.log("-------------")
-    //   console.log(response)
-    //   console.log("-------------")
-    let currentData = this.state.like;
-    let incomingData = test_artist;
-    let mergedData = currentData.concat(incomingData);
-    this.setState({
-      like: mergedData,
-      isLoading: false,
-    });
-    // };
-    // Get(obj, result);
+    let user_id = this.props.account.user_id;
+    let authToken = this.props.account.authToken;
+    let records = 5;
+    let data = {user_id, records};
+    let url = URL.ARTISTS_SPECIFIC;
+
+    const receiver = (response) => {
+      console.log('Response:');
+      console.log(response);
+
+      let currentData = this.state.suggested;
+      let incomingData = response.data.data;
+      let mergedData = currentData.concat(incomingData);
+      this.setState({
+        suggested: mergedData,
+        isLoading: false,
+      });
+    };
+
+    let payload = {
+      data,
+      url,
+      receiver,
+      authToken,
+    };
+    POST(payload);
   };
 
   onPressTile = (data) => {
@@ -121,7 +155,7 @@ export default class Artists extends Component {
   };
 
   render() {
-    let {isLoading, upcoming, like} = this.state;
+    let {isLoading, upcoming, suggested} = this.state;
     return (
       <LinearGradient
         colors={GRADIENT_COLOR_SET_1.COLORS}
@@ -139,38 +173,19 @@ export default class Artists extends Component {
             onEndReached={() => this.addUpcomingData()}
             onEndReachedThreshold={0.1}
             ListFooterComponent={this.renderFooter.bind(this)}
-            // refreshing={refreshing}
-            // onRefresh={onRefresh}
           />
           <Text style={styles.categoryText}>Artists You Might Like</Text>
           <FlatList
-            data={like}
+            data={suggested}
             extraData={this.state}
             style={styles.flatList}
             horizontal={true}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => `${index}-${item.id}`}
-            onEndReached={() => this.addLikeData()}
+            onEndReached={() => this.addSuggestedData()}
             onEndReachedThreshold={0.1}
             ListFooterComponent={this.renderFooter.bind(this)}
-            // refreshing={refreshing}
-            // onRefresh={onRefresh}
           />
-
-          {/* <FlatList
-            data={recent}
-            extraData={this.state}
-            numColumns={3}
-            scrollEnabled={false}
-            style={styles.flatList}
-            renderItem={this.renderItem2}
-            keyExtractor={(item, index) => `${index}-${item.id}`}
-            onEndReached={this.handleLoadMore.bind(this)}
-            onEndReachedThreshold={0.1}
-            ListFooterComponent={this.renderFooter.bind(this)}
-            // refreshing={refreshing}
-            // onRefresh={onRefresh}
-          /> */}
         </ScrollView>
       </LinearGradient>
     );
@@ -194,3 +209,18 @@ const styles = StyleSheet.create({
     marginBottom: DEVICE_HEIGHT * 0.05,
   },
 });
+
+const mapStateToProps = (state) => {
+  return {
+    account: state.accountReducer.account,
+    isLogin: state.accountReducer.isLogin,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (payload) => dispatch(login(payload)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Artists);
