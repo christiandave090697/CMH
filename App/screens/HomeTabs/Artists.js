@@ -37,7 +37,8 @@ class Artists extends Component {
     this.state = {
       upcoming: [],
       suggested: [],
-      extraData: [],
+      upcomingPage: 0,
+      suggestedPage: 0,
       isLoading: false,
     };
   }
@@ -47,15 +48,11 @@ class Artists extends Component {
   }
 
   initData = () => {
-    let user_id = this.props.account.user_id;
-    let authToken = this.props.account.authToken;
+    let {user_id, authToken} = this.props.account
     let data = {user_id};
     let url = URL.ARTISTS_ALL;
 
     const receiver = (response) => {
-      console.log('Response:');
-      console.log(response);
-
       let suggested = response.data.suggested.data
       let upcoming = response.data.upcoming.data
       this.setState({
@@ -75,22 +72,23 @@ class Artists extends Component {
   };
 
   addUpcomingData = () => {
-    this.setState({isLoading: true});
+    this.setState({isLoading:true})
+    let {upcomingPage, upcoming} = this.state
     let user_id = this.props.account.user_id;
     let authToken = this.props.account.authToken;
     let records = 5;
-    let data = {user_id, records};
+    let page = upcomingPage + 1
+    let status = 2;
+    let data = {user_id, records, page, status};
     let url = URL.ARTISTS_SPECIFIC;
 
     const receiver = (response) => {
-      console.log('Response:');
-      console.log(response);
-
-      let currentData = this.state.upcoming;
+      let currentData = upcoming;
       let incomingData = response.data.data;
       let mergedData = currentData.concat(incomingData);
       this.setState({
         upcoming: mergedData,
+        upcomingPage: page,
         isLoading: false,
       });
     };
@@ -105,23 +103,25 @@ class Artists extends Component {
   };
 
   addSuggestedData = () => {
-    this.setState({isLoading: true});
+    this.setState({isLoading:true})
+    let {suggestedPage, suggested} = this.state
     let user_id = this.props.account.user_id;
     let authToken = this.props.account.authToken;
     let records = 5;
-    let data = {user_id, records};
+    let page = suggestedPage + 1
+    let status = 2;
+    let data = {user_id, records, page, status};
     let url = URL.ARTISTS_SPECIFIC;
 
     const receiver = (response) => {
-      console.log('Response:');
-      console.log(response);
-
-      let currentData = this.state.suggested;
+      console.log(response)
+      let currentData = suggested;
       let incomingData = response.data.data;
       let mergedData = currentData.concat(incomingData);
       this.setState({
         suggested: mergedData,
         isLoading: false,
+        suggestedPage: page
       });
     };
 
@@ -149,7 +149,6 @@ class Artists extends Component {
   };
 
   renderFooter = () => {
-    //it will show indicator at the bottom of the list when data is loading otherwise it returns null
     if (!this.state.isLoading) return null;
     return <ActivityIndicator style={{color: '#000'}} />;
   };
@@ -173,6 +172,7 @@ class Artists extends Component {
             onEndReached={() => this.addUpcomingData()}
             onEndReachedThreshold={0.1}
             ListFooterComponent={this.renderFooter.bind(this)}
+            decelerationRate={0.5} 
           />
           <Text style={styles.categoryText}>Artists You Might Like</Text>
           <FlatList
@@ -185,6 +185,7 @@ class Artists extends Component {
             onEndReached={() => this.addSuggestedData()}
             onEndReachedThreshold={0.1}
             ListFooterComponent={this.renderFooter.bind(this)}
+            decelerationRate={0.5} 
           />
         </ScrollView>
       </LinearGradient>

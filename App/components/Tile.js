@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import {DEVICE_HEIGHT, DEVICE_WIDTH} from '../constants/constants';
+import Like from '../assets/svg/like.svg';
 
 export default class Tile extends Component {
   renderTileImageStyle = (type) => {
@@ -18,14 +19,32 @@ export default class Tile extends Component {
   renderTileLabelStyle = (type, data) => {
     let label = data.label;
     let favorites = data.favorites;
+    let artist = data.artist_name;
     switch (type) {
       case 0:
         return <Text style={styles.label_0}>{label}</Text>;
       case 1:
         return (
-          <View style={{alignItems:'center'}}>
+          <View style={{alignItems: 'center'}}>
             <Text style={styles.label_1}>{label}</Text>
-            <Text style={styles.favorites}>{favorites}</Text>
+            <View style={styles.row}>
+              <Like
+                width={DEVICE_WIDTH * 0.02}
+                height={DEVICE_HEIGHT * 0.02}
+                style={{marginRight: DEVICE_WIDTH * 0.02}}
+              />
+
+              <Text style={styles.favorites}>{favorites}</Text>
+            </View>
+          </View>
+        );
+      case 2:
+        return (
+          <View style={{alignItems: 'center'}}>
+            <Text style={styles.label_1}>{label}</Text>
+            <View style={styles.row}>
+              <Text style={styles.favorites}>{artist}</Text>
+            </View>
           </View>
         );
       default:
@@ -100,7 +119,10 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
 
-
+  row: {
+    flexDirection: 'row',
+    marginTop: DEVICE_HEIGHT * 0.01,
+  },
 
   gradient: {
     height: '100%',

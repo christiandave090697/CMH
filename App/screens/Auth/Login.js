@@ -44,12 +44,11 @@ class Login extends Component {
     let url = URL.LOGIN;
 
     const receiver = (response) => {
-      console.log('Response:');
-      console.log(response);
       let authToken = response.access_token;
-      let propData = {...data, authToken}
+      let user_id = response.user_id;
+      let propData = {...data, user_id, authToken}
       this.props.login(propData);
-      // this.props.navigation.navigate('Register')
+      this.props.navigation.navigate('Main')
     };
 
     let payload = {

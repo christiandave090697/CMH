@@ -52,10 +52,8 @@ class Register extends Component {
     const receiver = (response) => {
       console.log('Response:');
       console.log(response);
-      // let authToken = response.access_token;
-      // let propData = {...data, authToken}
-      // this.props.login(propData);
-      // this.props.navigation.navigate('Register')
+      alert("Registered")
+      this.props.navigation.navigate('Login')
     };
 
     let payload = {

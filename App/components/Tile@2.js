@@ -20,7 +20,9 @@ export default class Tile2 extends Component {
   };
 
   renderTileLabelStyle = (type, data) => {
-    let label = data.label;
+    // let label = data.label;
+    let label = data.title;
+
     let favorites = data.favorites;
     switch (type) {
       case 0:
@@ -28,9 +30,13 @@ export default class Tile2 extends Component {
       case 1:
         return (
           <View style={{alignItems: 'center'}}>
-            <Text style={styles.label_1}>{label}</Text>
-            <View style={{flexDirection: 'row'}}>
-              <Like />
+            <Text numberOfLines={1} style={styles.label_1}>{label}</Text>
+            <View style={styles.row}>
+              <Like
+                width={DEVICE_WIDTH * 0.02}
+                height={DEVICE_HEIGHT * 0.02}
+                style={{marginRight: DEVICE_WIDTH * 0.02}}
+              />
               <Text style={styles.favorites}>{favorites}</Text>
             </View>
           </View>
@@ -64,7 +70,7 @@ const styles = StyleSheet.create({
     height: DEVICE_HEIGHT * 0.28,
     width: DEVICE_WIDTH * 0.45,
     paddingLeft: DEVICE_WIDTH * 0.03,
-    marginBottom: DEVICE_HEIGHT * 0.02,
+    marginBottom: DEVICE_HEIGHT * 0.03,
   },
   artistTile: {
     height: DEVICE_HEIGHT * 0.23,
@@ -117,6 +123,11 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
 
+  row: {
+    flexDirection: 'row',
+    marginTop: DEVICE_HEIGHT * 0.01
+
+  },
   gradient: {
     height: '100%',
     width: '100%',

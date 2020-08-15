@@ -22,12 +22,16 @@ import AlbumTile from '../../components/AlbumTile';
 
 import LinearGradient from 'react-native-linear-gradient';
 
-import {Get} from '../../api/service/service';
+//redux
+import {connect} from 'react-redux';
+import {login} from '../../redux/actions/account';
+
+import {GET} from '../../api/service/service';
 import {URL} from '../../constants/apirUrls';
 
 import {test_artist, test_album} from '../../constants/test';
 
-export default class Featured extends Component {
+class Featured extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,25 +43,35 @@ export default class Featured extends Component {
   }
 
   componentDidMount() {
-    this.initData();
+    // this.initData();
   }
 
   initData = () => {
-    //api call
-    //const obj = new RecentRequestObject();
-    // obj.setUrl(URL.LOGIN);
-    // const result = (response) => {
-    //   console.log("-------------")
-    //   console.log(response)
-    //   console.log("-------------")
-    // };
-    // Get(obj, result);
+    // api call
+    let authToken = this.props.account.authToken
+    let url = URL.ARTISTS
+    let data = {
+      id 
+    }
+    
+    const receiver = (response) => {
+      console.log("-------------")
+      console.log(response)
+      console.log("-------------")
+    };
 
-    this.setState({
-      recent: test_artist,
-      featured: test_artist,
-      isLoading: false,
-    });
+    let payload = {
+      data,
+      url,
+      receiver,
+    };
+    GET(payload);
+
+    // this.setState({
+    //   recent: test_artist,
+    //   featured: test_artist,
+    //   isLoading: false,
+    // });
   };
 
   addRecentData = () => {
@@ -173,3 +187,18 @@ const styles = StyleSheet.create({
     height: DEVICE_HEIGHT * 0.15,
   },
 });
+
+const mapStateToProps = (state) => {
+  return {
+    account: state.accountReducer.account,
+    isLogin: state.accountReducer.isLogin,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (payload) => dispatch(login(payload)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Featured);

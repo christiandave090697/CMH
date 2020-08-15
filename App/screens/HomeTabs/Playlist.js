@@ -22,17 +22,21 @@ import AlbumTile from '../../components/AlbumTile';
 
 import LinearGradient from 'react-native-linear-gradient';
 
-import {Get} from '../../api/service/service';
+//redux
+import {connect} from 'react-redux';
+import {login} from '../../redux/actions/account';
+
+import {POST} from '../../api/service/service';
 import {URL} from '../../constants/apirUrls';
 
 import {test_playlist} from '../../constants/test';
 
-export default class Playlist extends Component {
+class Playlist extends Component {
   constructor(props) {
     super(props);
     this.state = {
       playlist: [],
-      extraData: [],
+      playlistPage: 0,
       isLoading: false,
     };
   }
@@ -42,42 +46,62 @@ export default class Playlist extends Component {
   }
 
   initData = () => {
-    //api call
-    //const obj = new RecentRequestObject();
-    // obj.setUrl(URL.LOGIN);
-    // const result = (response) => {
-    //   console.log("-------------")
-    //   console.log(response)
-    //   console.log("-------------")
-    // };
-    // Get(obj, result);
+    let {user_id, authToken} = this.props.account;
+    let data = {user_id};
+    let url = URL.PLAYLIST_ALL;
 
-    this.setState({
-      playlist: test_playlist,
-      isLoading: false,
-    });
+    const receiver = (response) => {
+      console.log('Response:');
+      console.log(response);
+
+      let playlist = response.data.data;
+      this.setState({
+        playlist: playlist
+      });
+    };
+
+    let payload = {
+      data,
+      url,
+      receiver,
+      authToken,
+    };
+    POST(payload);
   };
-
 
 
   addPlaylistData = () => {
     this.setState({isLoading: true});
-    //api call
-    //const obj = new RecentRequestObject();
-    // obj.setUrl(URL.LOGIN);
-    // const result = (response) => {
-    //   console.log("-------------")
-    //   console.log(response)
-    //   console.log("-------------")
-    let currentData = this.state.playlist;
-    let incomingData = test_playlist;
-    let mergedData = currentData.concat(incomingData);
-    this.setState({
-      playlist: mergedData,
-      isLoading: false,
-    });
-    // };
-    // Get(obj, result);
+    let {playlistPage, playlist} = this.state;
+    let user_id = this.props.account.user_id;
+    let authToken = this.props.account.authToken;
+    let records = 5;
+    let page = playlistPage + 1;
+    let data = {user_id, records, page};
+    let url = URL.PLAYLIST_ALL;
+
+    const receiver = (response) => {
+      console.log("======xxx=")
+      console.log(response.data.data)
+      console.log("======xxx=")
+
+      let currentData = playlist;
+      let incomingData = response.data.data;
+      let mergedData = currentData.concat(incomingData);
+      this.setState({
+        playlist: mergedData,
+        playlistPage: page,
+        isLoading: false,
+      });
+    };
+
+    let payload = {
+      data,
+      url,
+      receiver,
+      authToken,
+    };
+    POST(payload);
   };
 
   onPressTile = (data) => {
@@ -86,6 +110,7 @@ export default class Playlist extends Component {
 
   renderItem = ({item, index}) => {
     item.labelType = 1;
+    item.type = 'playlist'
     return <Tile2 data={item} onPressTile={this.onPressTile} />;
   };
 
@@ -138,3 +163,19 @@ const styles = StyleSheet.create({
     marginBottom: DEVICE_HEIGHT * 0.05,
   },
 });
+
+
+const mapStateToProps = (state) => {
+  return {
+    account: state.accountReducer.account,
+    isLogin: state.accountReducer.isLogin,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (payload) => dispatch(login(payload)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Playlist);

@@ -6,15 +6,19 @@ export function POST(payload) {
   let data = payload.data
   let url = payload.url
   let receiver = payload.receiver
+  let authToken = getBasicAuthentication(payload.authToken)
+  console.log('=====start=====')
   console.log('[POST]')
   console.log('URL: ', url)
   console.log('body:')
   console.log(data)
+  console.log('=====end=====')
   return fetch(url, {
     method: 'POST',
     headers: {
-      Accept: 'application/json',
+      Accept: 'application/json', 
       'Content-Type': 'application/json',
+      Authorization: authToken
     },
     body: JSON.stringify(data),
   })
