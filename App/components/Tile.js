@@ -11,6 +11,8 @@ export default class Tile extends Component {
         return styles.artistTile;
       case 'album':
         return styles.albumTile;
+      case 'playlist':
+        return styles.playListTile
       default:
         return;
     }
@@ -95,6 +97,15 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 30,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
+  },
+  playListTile: {
+    height: DEVICE_HEIGHT * 0.15,
+    width: DEVICE_WIDTH * 0.3,
+    backgroundColor: 'white',
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 30,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
   },
 
   //label

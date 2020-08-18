@@ -242,6 +242,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     paddingLeft: DEVICE_WIDTH * 0.01,
     paddingTop: DEVICE_HEIGHT * 0.03,
+    flex:1
   },
   categoryText: {
     fontSize: DEVICE_HEIGHT * 0.03,

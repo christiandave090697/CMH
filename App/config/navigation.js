@@ -22,11 +22,15 @@ import Albums from '../screens/HomeTabs/Albums'
 import BottomTab from '../components/BottomTab';
 import HomeTabs from '../components/HomeTabs';
 
+import SubCategory from '../screens/Main/Category/subCategory';
+
 
 const authStack = createStackNavigator();
 const appStack = createStackNavigator();
 const mainTabStack = createBottomTabNavigator();
 const homeTabStack = createMaterialTopTabNavigator();
+const categoryStack = createStackNavigator();
+
 
 
 
@@ -34,7 +38,7 @@ const MainTabStackScreen = () => (
   <mainTabStack.Navigator tabBar={(props) => <BottomTab {...props} />}>
     <mainTabStack.Screen name="Home" component={HomeTabStack} />
     <mainTabStack.Screen name="Search" component={Search} />
-    <mainTabStack.Screen name="Category" component={Category} />
+    <mainTabStack.Screen name="Category" component={CategoryStackScreen} />
     <mainTabStack.Screen name="Library" component={Library} />
   </mainTabStack.Navigator>
 );
@@ -48,6 +52,13 @@ const HomeTabStack = () => (
   </homeTabStack.Navigator>
 );
 
+const CategoryStackScreen = () => (
+  <categoryStack.Navigator screenOptions={{headerShown: false}}>
+    <categoryStack.Screen name="CategoryIndex" component={Category} />
+    <categoryStack.Screen name="SubCategory" component={SubCategory} />
+  </categoryStack.Navigator>
+);
+
 const AuthStackScreen = () => (
   <authStack.Navigator screenOptions={{headerShown: false}}>
     <authStack.Screen name="Initial" component={Initial} />
@@ -58,11 +69,11 @@ const AuthStackScreen = () => (
 
 const AppStackScreen = () => (
   <appStack.Navigator>
-    <appStack.Screen
+    {/* <appStack.Screen
       name="Auth"
       component={AuthStackScreen}
       options={{headerShown: false}}
-    />
+    /> */}
     <appStack.Screen name="Main" component={MainTabStackScreen} />
   </appStack.Navigator>
 );

@@ -83,7 +83,6 @@ class Login extends Component {
     return (
       <View style={styles.mainContainer}>
         <ImageBackground source={LOGIN_BG} style={styles.ImageBackground}>
-          <Button title="props" onPress={()=> console.log(this.props.account.authToken)}/>
           <CMH width={CHM_LOGO_WIDTH} height={CHM_LOGO_HEIGHT} />
           <Input
             borderColor={'#FFFFFF'}
