@@ -50,8 +50,6 @@ class Register extends Component {
     let url = URL.REGISTER;
 
     const receiver = (response) => {
-      console.log('Response:');
-      console.log(response);
       alert("Registered")
       this.props.navigation.navigate('Login')
     };
@@ -71,21 +69,18 @@ class Register extends Component {
   };
 
   email = (input) => {
-    console.log(input);
     this.setState({
       email: input,
     });
   };
 
   password = (input) => {
-    console.log(input);
     this.setState({
       password: input,
     });
   };
 
   retypePassword = (input) => {
-    console.log(input);
     this.setState({
       retypePassword: input,
     });

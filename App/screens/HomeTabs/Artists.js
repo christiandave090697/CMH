@@ -114,7 +114,6 @@ class Artists extends Component {
     let url = URL.ARTISTS_SPECIFIC;
 
     const receiver = (response) => {
-      console.log(response)
       let currentData = suggested;
       let incomingData = response.data.data;
       let mergedData = currentData.concat(incomingData);
@@ -135,7 +134,6 @@ class Artists extends Component {
   };
 
   onPressTile = (data) => {
-    console.log(data);
   };
 
   renderItem = ({item, index}) => {

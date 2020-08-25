@@ -51,8 +51,6 @@ class Playlist extends Component {
     let url = URL.PLAYLIST_ALL;
 
     const receiver = (response) => {
-      console.log('Response:');
-      console.log(response);
 
       let playlist = response.data.data;
       this.setState({
@@ -81,10 +79,6 @@ class Playlist extends Component {
     let url = URL.PLAYLIST_ALL;
 
     const receiver = (response) => {
-      console.log("======xxx=")
-      console.log(response.data.data)
-      console.log("======xxx=")
-
       let currentData = playlist;
       let incomingData = response.data.data;
       let mergedData = currentData.concat(incomingData);

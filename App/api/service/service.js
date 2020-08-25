@@ -7,12 +7,11 @@ export function POST(payload) {
   let url = payload.url
   let receiver = payload.receiver
   let authToken = getBasicAuthentication(payload.authToken)
-  console.log('=====start=====')
+  console.log('\n=====start=========================')
   console.log('[POST]')
   console.log('URL: ', url)
-  console.log('body:')
-  console.log(data)
-  console.log('=====end=====')
+  console.log('body:' + " " + JSON.stringify(data))
+  console.log('\n=====end===========================')
   return fetch(url, {
     method: 'POST',
     headers: {
@@ -47,9 +46,7 @@ export function GET(payload) {
   })
     .then((response) => response.json())
     .then((responseData) => {
-      console.log("--------------")
-      console.log(responseData)
-      // receiver(responseData);
+      receiver(responseData);
     })
     .catch((error) => {
       console.error(error);

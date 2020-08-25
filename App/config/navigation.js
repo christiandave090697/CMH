@@ -69,11 +69,11 @@ const AuthStackScreen = () => (
 
 const AppStackScreen = () => (
   <appStack.Navigator>
-    {/* <appStack.Screen
+    <appStack.Screen
       name="Auth"
       component={AuthStackScreen}
       options={{headerShown: false}}
-    /> */}
+    />
     <appStack.Screen name="Main" component={MainTabStackScreen} />
   </appStack.Navigator>
 );

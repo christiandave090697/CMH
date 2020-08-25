@@ -34,8 +34,8 @@ class Login extends Component {
   }
 
   _getState = () => ({
-    email: 'admin@gmail.com',
-    password: 'admin123',
+    email: "user1@gmail.com",
+    password: "qqww1122"
   });
 
   onPressLogin = () => {
@@ -44,11 +44,17 @@ class Login extends Component {
     let url = URL.LOGIN;
 
     const receiver = (response) => {
-      let authToken = response.access_token;
-      let user_id = response.user_id;
-      let propData = {...data, user_id, authToken}
-      this.props.login(propData);
-      this.props.navigation.navigate('Main')
+      let status = response.status;
+      if (status) {
+        let authToken = response.access_token;
+        let user_id = response.user_id;
+        let propData = {...data, user_id, authToken};
+        this.props.login(propData);
+        this.props.navigation.navigate('Main');
+      }
+      else {
+        alert("invalid credentials")
+      }
     };
 
     let payload = {
@@ -59,19 +65,15 @@ class Login extends Component {
     POST(payload);
   };
 
-  componentDidMount() {
-   
-  }
+  componentDidMount() {}
 
   email = (input) => {
-    console.log(input);
     this.setState({
       email: input,
     });
   };
 
   password = (input) => {
-    console.log(input);
     this.setState({
       password: input,
     });

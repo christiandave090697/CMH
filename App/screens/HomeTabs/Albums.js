@@ -55,8 +55,6 @@ class Albums extends Component {
     let url = URL.ALBUMS_ALL;
 
     const receiver = (response) => {
-      console.log('Response:');
-      console.log(response);
 
       let releases = response.data.new_release.data;
       let picks = response.data.our_picks.data;
@@ -171,7 +169,6 @@ class Albums extends Component {
   };
 
   onPressTile = (data) => {
-    console.log(data);
   };
 
   renderItem = ({item, index}) => {

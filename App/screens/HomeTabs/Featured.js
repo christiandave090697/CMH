@@ -55,9 +55,6 @@ class Featured extends Component {
     }
     
     const receiver = (response) => {
-      console.log("-------------")
-      console.log(response)
-      console.log("-------------")
     };
 
     let payload = {
